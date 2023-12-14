@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34316.72
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Socket_Mail_Client", "Socket_Mail_Client\Socket_Mail_Client.pyproj", "{D5160992-83E3-4EF6-AFAE-973D3B47BAB8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D5160992-83E3-4EF6-AFAE-973D3B47BAB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5160992-83E3-4EF6-AFAE-973D3B47BAB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {80D8BC5E-E884-4D5B-9400-BCAF00385BB0}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,36 @@
+<Config>
+	<!-- General Settings -->
+	<General>
+		<Username>Xanh Nguyen &lt;nvxanh75@gmail.com&gt;</Username>
+		<Password>ahihi</Password>
+		<MailServer>127.0.0.1</MailServer>
+		<SMTP>2225</SMTP>
+		<POP3>3335</POP3>
+		<Autoload>10</Autoload>
+	</General>
+
+	<!-- Filters -->
+	<Filters>
+		<Filter>
+			<From>ahihi@testing.com</From>
+			<From>cuong1312mn@gmail.com</From>
+			<ToFolder>Project</ToFolder>
+		</Filter>
+		<Filter>
+			<Subject>urgent</Subject>
+			<Subject>ASAP</Subject>
+			<ToFolder>Important</ToFolder>
+		</Filter>
+		<Filter>
+			<Content>report</Content>
+			<Content>meeting</Content>
+			<ToFolder>Work</ToFolder>
+		</Filter>
+		<Filter>
+			<Spam>virus</Spam>
+			<Spam>hack</Spam>
+			<Spam>crack</Spam>
+			<ToFolder>Spam</ToFolder>
+		</Filter>
+	</Filters>
+</Config>
