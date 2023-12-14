@@ -1,6 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\Socket_Mail_Client",
+    "\\Socket_Mail_Client\\Socket_Mail_Client"
   ],
+  "SelectedNode": "\\Socket_Mail_Client\\Socket_Mail_Client.sln",
   "PreviewInSolutionExplorer": false
 }

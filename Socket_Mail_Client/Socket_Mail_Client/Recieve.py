@@ -55,11 +55,16 @@ class ParserEmail:
     def get_email_content(self):
         if self.msg.is_multipart():
             content_parts = []
+
             for part in self.msg.iter_parts():
-                content_parts.append(part.get_payload(decode=True))
-            return b"\n".join(content_parts)
+                content_type = part.get_content_type()
+
+                if content_type == "text/plain" or content_type == "text/html":
+                    content_parts.append(part.get_payload(decode=True).decode("utf-8"))
+
+            return "\n".join(content_parts)
         else:
-            return self.msg.get_payload(decode=True)
+            return self.msg.get_payload(decode=True).decode("utf-8")
 
 
 class MailReceiver:
@@ -290,7 +295,7 @@ class MailReceiver:
             file_index = file_index + 1
 
     @staticmethod
-    def readFile(folder_choose, file_choose):
+    def readEmail(folder_choose, file_choose):
         file_index = 1
 
         for file_name in os.listdir(
@@ -304,7 +309,7 @@ class MailReceiver:
                     email_data = file.read()
                     email = ParserEmail()
                     email.parse(email_data)
-                    print(email.Content.decode("utf-8"))
+                    print(email.Content)
 
                     break
 
@@ -442,7 +447,7 @@ class MailReceiver:
                     break
 
             print(f"Nội dung của mail thứ {str(file_choose)}:")
-            MailReceiver.readFile(folder_choose, file_choose)
+            MailReceiver.readEmail(folder_choose, file_choose)
 
             if MailReceiver.checkFileInMail(folder_choose, file_choose):
                 save = int(
