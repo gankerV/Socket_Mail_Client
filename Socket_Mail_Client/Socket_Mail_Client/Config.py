@@ -1,15 +1,15 @@
 ﻿import xml.etree.ElementTree as ET
 
+xml_file_path = "Config.xml"
+
 
 class Config:
-    xml_file_path = "Config.xml"
-
-    def __init__(self, xml_file_path="Config.xml"):
+    def __init__(self):
         self.xml_file_path = xml_file_path
         self.tree = ET.parse(self.xml_file_path)
         self.root = self.tree.getroot()
 
-        # Đọc thông tin cấu hình chung
+        # read  infor general
         self.username = self.root.find(".//General/Username").text
         start_index = self.username.find("<") + 1
         end_index = self.username.find(">")
@@ -20,7 +20,7 @@ class Config:
         self.POP3_PORT = int(self.root.find(".//General/POP3").text)
         self.auto_load_time = int(self.root.find(".//General/Autoload").text)
 
-        # Đọc thông tin filter
+        # read infor filter
         self.project_filter = [
             filter_elem.text
             for filter_elem in self.root.findall(
@@ -46,7 +46,7 @@ class Config:
             )
         ]
 
-        # Đọc danh sách thư mục
+        # read list of file in folder
         self.folders = []
         for filter_element in self.root.findall(".//Filters/Filter"):
             to_folder_element = filter_element.find("ToFolder")

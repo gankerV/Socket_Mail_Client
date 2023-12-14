@@ -1,20 +1,10 @@
 ﻿import socket
-import uuid
 import os
 import base64
 from email.utils import formatdate
 import time
-import threading
-import random
 import string
 
-
-import email
-from email import policy
-from email.parser import BytesParser
-
-
-import email
 from email import policy
 from email.parser import BytesParser
 
@@ -25,7 +15,7 @@ imageTypeList = ["png", "jpg", "jpeg", "gif"]
 textTypeList = ["txt"]
 applicationTypeList = ["pdf", "zip", "rar", "docx"]
 fileTypeAll = [imageTypeList, textTypeList, applicationTypeList]
-folder_path = "C:/Users/XANH/Downloads/Socket_Mail_Client/Socket_Mail_Client/Folder/"
+folder_path = "C:/Users/XANH/Source/Repos/Socket_Mail_Client test/Socket_Mail_Client/Socket_Mail_Client/Folder/"
 letters = [string.digits, string.ascii_letters]
 stop_thread = False
 
@@ -93,7 +83,7 @@ class MailReceiver:
 
     def checkWorkMail(email):
         for keyword in C.work_filter:
-            if keyword.encode("utf-8") in email.Content:
+            if keyword in email.Content:
                 return True
 
         return False
@@ -103,7 +93,7 @@ class MailReceiver:
             if keyword in email.Subject:
                 return True
 
-            if keyword.encode("utf-8") in email.Content:
+            if keyword in email.Content:
                 return True
 
         return False
@@ -132,10 +122,10 @@ class MailReceiver:
         return data[:-7]
 
     def checkExistFile(folder_path, mail_id):
-        file_names = []  # danh sách lưu các file đã tải, chỉ dùng trong hàm này
+        file_names = []  # list file loaded
         for foldername, subfolders, filenames in os.walk(folder_path):
             for file_name in filenames:
-                # lấy id của mỗi file đã được tải về
+                # parse id 
                 start_index = file_name.find(")") + 2
                 end_index = file_name.find("_")
                 file_name_id = file_name[start_index:end_index]
@@ -151,7 +141,6 @@ class MailReceiver:
             return True
         return False
 
-    @staticmethod
     def mailLoader():
         c = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         c.connect((C.HOST, MailReceiver.POP3_PORT))
@@ -233,7 +222,7 @@ class MailReceiver:
             sender_name = email.From
 
             file_name = (
-                "(chưa đọc)"
+                "(unread)"
                 + " "
                 + str(mail_ids[num_id - 1])
                 + "_"
@@ -252,7 +241,6 @@ class MailReceiver:
             MailReceiver.mailLoader()
             time.sleep(C.auto_load_time)
 
-    @staticmethod
     def getMailsFromFolder(folder):
         index = 1
 
@@ -262,7 +250,6 @@ class MailReceiver:
 
             index = index + 1
 
-    @staticmethod
     def checkValidMailNum(folder_choose, file_choose):
         count = 0
 
@@ -283,7 +270,7 @@ class MailReceiver:
         ):
             if file_index == file_choose:
                 index = file_name.find(") ")
-                new_file_name = "(đã đọc)" + " " + file_name[index + 2 :]
+                new_file_name = "(read)" + " " + file_name[index + 2 :]
                 new_file_path = (
                     folder_path + C.folders[folder_choose - 1] + new_file_name
                 )
@@ -294,7 +281,6 @@ class MailReceiver:
 
             file_index = file_index + 1
 
-    @staticmethod
     def readEmail(folder_choose, file_choose):
         file_index = 1
 
@@ -395,15 +381,13 @@ class MailReceiver:
         file_choose = -1
 
         while True:
-            print("\nĐây là danh sách các folder trong mailbox của bạn:")
+            print("\nHere is a list of folders in your mailbox:")
             print("1. Inbox")
             print("2. Project")
             print("3. Important")
             print("4. Work")
             print("5. Spam")
-            folder_choose = input(
-                "Bạn muốn xem email trong folder nào (Nhấn enter để thoát ra ngoài): "
-            )
+            folder_choose = input("Which folder (Press enter in order to quit): ")
 
             if folder_choose == "":
                 quit()
@@ -418,14 +402,14 @@ class MailReceiver:
         while True:
             while True:
                 print(
-                    f"Đây là danh sách email trong {C.folders[folder_choose - 1][:-1]} folder"
+                    f"Here is list of emails in {C.folders[folder_choose - 1][:-1]} folder"
                 )
                 MailReceiver.getMailsFromFolder(C.folders[folder_choose - 1])
 
                 print("")
 
                 file_choose = input(
-                    "Bạn muốn đọc Email thứ mấy (Nhấn enter để thoát ra ngoài, nhấn 0 để xem lại danh sách mail): "
+                    "Which email (Press enter in order to quit, press 0 in order to see list of emails): "
                 )
 
                 if file_choose == "":
@@ -439,25 +423,25 @@ class MailReceiver:
 
                 if not MailReceiver.checkValidMailNum(folder_choose, file_choose):
                     print(
-                        f"{C.folders[folder_choose - 1]} folder không có file thứ ",
+                        f"{C.folders[folder_choose - 1]} folder does not have file number ",
                         file_choose,
                     )
                     continue
                 else:
                     break
 
-            print(f"Nội dung của mail thứ {str(file_choose)}:")
+            print(f"Content of email number {str(file_choose)}:")
             MailReceiver.readEmail(folder_choose, file_choose)
 
             if MailReceiver.checkFileInMail(folder_choose, file_choose):
                 save = int(
                     input(
-                        "Trong email này có file đính kèm, bạn có muốn lưu không? (1. có, 2. không): "
+                        "Email has attached file(s), do you want to save? (1. Yes, 2. No): "
                     )
                 )
 
                 if save == 1:
-                    folder_link = input("Cho biết đường dẫn đến thư mục bạn muốn lưu: ")
+                    folder_link = input("Folder path for attached file(s): ")
                     MailReceiver.downFile(folder_link, folder_choose, file_choose)
 
             MailReceiver.updateReadFile(folder_choose, file_choose)
