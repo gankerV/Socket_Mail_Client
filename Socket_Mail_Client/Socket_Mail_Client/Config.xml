@@ -1,7 +1,7 @@
 <Config>
 	<!-- General Settings -->
 	<General>
-		<Username>Xanh Nguyen &lt;nvxanh75@gmail.com&gt;</Username>
+		<Username>Xanh Nguyen &lt;nvxnah75@gmail.com&gt;</Username>
 		<Password>ahihi</Password>
 		<MailServer>127.0.0.1</MailServer>
 		<SMTP>2225</SMTP>

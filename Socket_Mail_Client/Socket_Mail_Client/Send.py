@@ -20,6 +20,7 @@ from email.parser import BytesParser
 
 from Config import Config
 
+stop_thread = False
 
 imageTypeList = ["png", "jpg", "jpeg", "gif"]
 textTypeList = ["txt"]
